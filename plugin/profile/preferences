@@ -1,0 +1,10 @@
+# Wireshark profile for Pcapy captures: adds an "App" column.
+gui.column.format:
+	"No.", "%m",
+	"Time", "%t",
+	"App", "%Cus:pcapy.app:0:R",
+	"Source", "%s",
+	"Destination", "%d",
+	"Protocol", "%p",
+	"Length", "%L",
+	"Info", "%i"

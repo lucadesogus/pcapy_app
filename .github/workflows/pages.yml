@@ -1,0 +1,42 @@
+name: Deploy website to GitHub Pages
+
+# This repository is the website. One-time setup: Settings > Pages > Build and deployment > Source: "GitHub Actions".
+# (GitHub Pages is free for public repositories.)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Test the site
+        run: python3 tests/test_site.py
+
+      - name: Build the site
+        run: python3 tools/build_site.py
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

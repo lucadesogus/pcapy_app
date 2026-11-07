@@ -1,0 +1,7 @@
+# Build output
+_site/
+
+# Python / OS noise
+__pycache__/
+*.pyc
+.DS_Store

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+{{> head}}
+<title>Pcapy: packet capture for your phone, live in Wireshark</title>
+<meta name="description" content="Pcapy captures the traffic of the apps you choose on your phone and streams it live into Wireshark, with the app name next to every packet.">
+</head>
+<body>
+{{> header}}
+<main id="main">
+  <div class="container">
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow">Packet capture for your pocket</p>
+        <h1 id="hero-title">See what your phone is saying to the network.</h1>
+        <p class="lead">Pcapy turns your phone into a packet-capture probe. It records the traffic of the apps you pick and streams it live into Wireshark on your computer, with the app name beside every packet.</p>
+        <div class="cta">
+          <a class="btn primary" href="install.html#plugin">Install the Wireshark plugin</a>
+          {{> stores}}
+        </div>
+      </div>
+      <div class="mascot">
+        <img src="assets/pcapy-mark.png" width="512" height="512" alt="Pcapy, a capybara in a fishing hat holding a glowing Wi-Fi net">
+      </div>
+    </section>
+
+    <section aria-labelledby="how">
+      <h2 id="how">How it works</h2>
+      <ol class="steps">
+        <li><strong>Pick your apps</strong>Choose which apps to watch and set a password. Pcapy runs as a local VPN on the phone, so nothing has to be configured on the network.</li>
+        <li><strong>Start the capture</strong>Your apps keep working normally while Pcapy records their packets to a pcapng file and offers a live stream on your local network.</li>
+        <li><strong>Watch it in Wireshark</strong>Pick the <em>Pcapy: phone</em> interface, enter the phone's address and your password, and packets appear live.</li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="features">
+      <h2 id="features">What you get</h2>
+      <div class="grid">
+        <article class="card"><h3>Per-app capture</h3><p>On Android, capture only the apps you select. The rest of the phone stays out of the file.</p></article>
+        <article class="card"><h3>App names in Wireshark</h3><p>Every packet is tagged with the app that sent it. Filter with <code>pcapy.app == "com.example.app"</code> or add an <em>App</em> column.</p></article>
+        <article class="card"><h3>Live, password-protected stream</h3><p>Wireshark connects with a password you choose. The password itself is never sent, and repeated wrong guesses lock the address out.</p></article>
+        <article class="card"><h3>DNS you can see</h3><p>Lookups are kept readable, so you can tell which hosts an app is talking to.</p></article>
+        <article class="card"><h3>Saved captures</h3><p>Every session is saved as a standard <code>.pcapng</code> file you can share or open in any tool.</p></article>
+        <article class="card"><h3>Stays on your devices</h3><p>No account, no ads, no analytics. Your captures go nowhere you don't send them. <a href="privacy.html">Read the privacy policy</a>.</p></article>
+      </div>
+    </section>
+
+    <section aria-labelledby="platforms">
+      <h2 id="platforms">Android and iPhone</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">&nbsp;</th><th scope="col">Android</th><th scope="col">iPhone</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Capture</th><td>Only the apps you select</td><td>The whole device (Apple does not allow per-app capture)</td></tr>
+            <tr><th scope="row">App names in Wireshark</th><td>Yes, on Android 10 and newer</td><td>No (Apple does not reveal which app owns a connection)</td></tr>
+            <tr><th scope="row">Requires</th><td>Android 7 or newer</td><td>iOS 15 or newer</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="limits">
+      <h2 id="limits">Good to know</h2>
+      <div class="warn">
+        <p><strong>No decryption.</strong> HTTPS stays encrypted. You see who talked to whom, when and how much, plus the app name on Android, but not the contents.</p>
+      </div>
+      <div class="warn">
+        <p><strong>The live stream is not encrypted.</strong> The password stops casual connections, but anyone on the same Wi-Fi can read the packets in transit. Use a network you trust.</p>
+      </div>
+      <p class="muted">Use Pcapy only on devices and networks you own or are authorised to test.</p>
+    </section>
+
+    <section aria-labelledby="get">
+      <h2 id="get">Get Pcapy</h2>
+      <p>Two parts: the phone app and the Wireshark plugin.</p>
+      <div class="cta">
+        {{> stores}}
+        <a class="btn primary" href="install.html#plugin">Wireshark plugin</a>
+      </div>
+    </section>
+  </div>
+</main>
+{{> footer}}
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+{{> head}}
+<title>Install Pcapy: phone app and Wireshark plugin</title>
+<meta name="description" content="How to install the Pcapy phone app and the Wireshark plugin on macOS, Linux and Windows, connect them, and fix common problems.">
+</head>
+<body>
+{{> header}}
+<main id="main">
+  <div class="container page">
+    <div class="prose">
+      <p class="eyebrow">Install</p>
+      <h1>Install Pcapy</h1>
+      <p class="lead">Pcapy has two parts: an app on your phone that captures, and a plugin that lets Wireshark on your computer receive the capture. Set up both once, then connecting takes a few seconds.</p>
+
+      <nav class="toc" aria-label="On this page">
+        <strong>On this page</strong>
+        <ol>
+          <li><a href="#requirements">What you need</a></li>
+          <li><a href="#phone">1. Install the phone app</a></li>
+          <li><a href="#plugin">2. Install the Wireshark plugin</a></li>
+          <li><a href="#connect">3. Connect</a></li>
+          <li><a href="#troubleshooting">Troubleshooting</a></li>
+          <li><a href="#uninstall">Update or uninstall</a></li>
+        </ol>
+      </nav>
+
+      <h2 id="requirements">What you need</h2>
+      <ul>
+        <li><strong>Wireshark 4.x</strong> on your computer (developed with 4.6). Download it from <a href="https://www.wireshark.org/download.html" rel="noopener">wireshark.org</a>.</li>
+        <li><strong>Python 3</strong> on your computer. macOS and most Linux systems already have it. On Windows, install it from <a href="https://www.python.org/downloads/" rel="noopener">python.org</a>.</li>
+        <li>An <strong>Android 7+</strong> phone or an <strong>iPhone with iOS 15+</strong>.</li>
+        <li>The phone and the computer on the <strong>same network</strong>.</li>
+      </ul>
+
+      <h2 id="phone">1. Install the phone app</h2>
+      <div class="cta flush">
+        {{> stores}}
+      </div>
+      <p class="mt-1">When you first tap <strong>Start</strong>, the system asks permission to set up a VPN. Pcapy uses it only to see and forward the traffic of your own device; <a href="privacy.html">see the privacy policy</a>.</p>
+
+      <h2 id="plugin">2. Install the Wireshark plugin</h2>
+      <p>Download the plugin and unzip it. It contains an installer for each system, the capture interface, and a Wireshark profile that adds an <em>App</em> column.</p>
+      <p><a class="btn primary" href="downloads/pcapy-wireshark-plugin.zip" download>Download the plugin (.zip)</a></p>
+      <p class="muted">Integrity check: the SHA-256 of the file is in <a href="downloads/pcapy-wireshark-plugin.zip.sha256">pcapy-wireshark-plugin.zip.sha256</a>.</p>
+
+      <p class="tabs-title">macOS and Linux</p>
+      <pre data-copy><code>$ unzip pcapy-wireshark-plugin.zip
+$ cd pcapy-wireshark-plugin
+$ sh install.sh</code></pre>
+      <p>The installer asks Wireshark where its plugin folders are, so it also works with unusual setups. It picks the right script for your system (<code>install-macos.sh</code> or <code>install-linux.sh</code>).</p>
+
+      <p class="tabs-title">Windows</p>
+      <p>Unzip the file, then double-click <code>install.bat</code>. Or, in PowerShell, from the unzipped folder:</p>
+      <pre data-copy><code>powershell -ExecutionPolicy Bypass -File install.ps1</code></pre>
+
+      <p>After installing, <strong>quit Wireshark completely and open it again</strong> so it loads the plugin.</p>
+      <div class="note">
+        <p>The plugin is developed and tested on macOS. The Linux and Windows installers follow the same logic but have had less testing. If one misbehaves, the troubleshooting section below shows how to place the files by hand.</p>
+      </div>
+      <p>Useful options for the installers: <code>--uninstall</code> to remove the plugin, <code>--help</code> to list the rest (<code>-Uninstall</code> on Windows).</p>
+
+      <h2 id="connect">3. Connect</h2>
+      <ol>
+        <li><strong>On the phone:</strong> open Pcapy, set a <strong>password</strong> of at least 8 characters (the dice button makes a strong random one), choose the apps to capture (Android), and tap <strong>Start</strong>. The app shows the phone's <strong>IP address</strong> and the <strong>port</strong> (19000 by default).</li>
+        <li><strong>In Wireshark:</strong> in the list of capture interfaces, find <strong>Pcapy: phone</strong> and click the gear icon next to it. Enter the phone's IP address, the port and your password, then save.</li>
+        <li>Double-click <strong>Pcapy: phone</strong> to start capturing. Packets appear as your apps use the network.</li>
+        <li>To see which app sent each packet, choose the <strong>Pcapy</strong> profile (bottom-right corner of Wireshark). You can also filter with <code>pcapy.app</code> and <code>pcapy.uid</code>.</li>
+      </ol>
+      <pre data-copy><code>pcapy.app == "com.example.app"</code></pre>
+
+      <h2 id="troubleshooting">Troubleshooting</h2>
+      <details>
+        <summary>The "Pcapy: phone" interface does not appear in Wireshark</summary>
+        <ul>
+          <li>Quit Wireshark completely (not just the window) and start it again.</li>
+          <li>Check that Python 3 works: <code>python3 --version</code> (macOS/Linux) or <code>py -3 --version</code> (Windows).</li>
+          <li>Open <em>Help &rarr; About Wireshark &rarr; Folders</em>. The installer puts <code>pcapy_extcap.py</code> in the <strong>Personal Extcap path</strong> (on Windows, <code>pcapy_extcap.bat</code> plus a <code>pcapy</code> folder) and <code>pcapy.lua</code> in <strong>Personal Lua Plugins</strong>. If they are missing, copy them there by hand from the unzipped plugin. On macOS and Linux the extcap file must be executable (<code>chmod +x</code>).</li>
+        </ul>
+      </details>
+      <details>
+        <summary>"Cannot connect" or a timeout</summary>
+        <ul>
+          <li>Make sure the capture is running on the phone (the app shows <em>LIVE</em>).</li>
+          <li>Phone and computer must be on the same network. Guest Wi-Fi networks often block devices from talking to each other.</li>
+          <li>Check the IP address and port against what the app shows. A computer firewall or a VPN on the computer can also get in the way.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>"Authentication failed: wrong password"</summary>
+        <p>The password in Wireshark must match the one in the app exactly. The app shows it when you tap the eye icon. Passwords are case-sensitive.</p>
+      </details>
+      <details>
+        <summary>"The phone is refusing connections from this computer"</summary>
+        <p>After a wrong password the phone makes the computer wait: 2 seconds, doubling with every further failure up to 60 seconds. This protects the stream against guessing. Wait for the number of seconds shown, then try again with the right password.</p>
+      </details>
+      <details>
+        <summary>The App column is empty, or filters show nothing</summary>
+        <ul>
+          <li>Choose the <strong>Pcapy</strong> profile in the bottom-right corner of Wireshark, or right-click the <em>App</em> field in a packet's details and choose <em>Apply as Column</em>.</li>
+          <li>App names need <strong>Android 10 or newer</strong>. On iPhone, Apple does not reveal which app a connection belongs to, so the column stays empty.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>I do not see DNS lookups</summary>
+        <p>Turn on <strong>Show DNS lookups</strong> in the app before you start. It makes the system fall back to plain DNS so the queries are readable. If your phone is set to a strict private DNS, turn the option off, otherwise name resolution fails.</p>
+      </details>
+      <details>
+        <summary>Why can't I read the contents of web pages?</summary>
+        <p>HTTPS is encrypted end to end and Pcapy does not decrypt it. You can see the hosts, timing and sizes, not the contents.</p>
+      </details>
+
+      <h2 id="uninstall">Update or uninstall</h2>
+      <p>To update, download the newest plugin zip and run the installer again; it replaces the old files and never overwrites your <em>Pcapy</em> profile. To remove the plugin:</p>
+      <pre data-copy><code>$ sh install.sh --uninstall</code></pre>
+      <p>On Windows, run <code>install.bat -Uninstall</code>. Your Wireshark profile is kept; delete it in <em>Edit &rarr; Configuration Profiles</em> if you want it gone.</p>
+    </div>
+  </div>
+</main>
+{{> footer}}
+</body>
+</html>

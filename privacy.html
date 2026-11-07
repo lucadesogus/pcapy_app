@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+{{> head}}
+<title>Privacy policy: Pcapy</title>
+<meta name="description" content="Pcapy's privacy policy: no accounts, no analytics, no tracking. What the app records, where it is stored, and what leaves your device.">
+</head>
+<body>
+{{> header}}
+<main id="main">
+  <div class="container page">
+    <div class="prose">
+      <p class="eyebrow">Privacy policy</p>
+      <h1>Privacy policy</h1>
+      <p class="updated">Last updated: {{PRIVACY_UPDATED}}</p>
+
+      <div class="card mb-2">
+        <h2 class="card-title">In short</h2>
+        <ul>
+          <li>Pcapy has <strong>no accounts, no ads, no analytics and no tracking</strong>, and it contains <strong>no third-party SDKs</strong>.</li>
+          <li>The developer <strong>does not receive</strong> your traffic, your captures, your password or any other data. Pcapy has no server that collects it.</li>
+          <li>What the app records stays <strong>on your phone</strong> unless you choose to send it somewhere, by connecting Wireshark on your own computer or by tapping Share.</li>
+        </ul>
+      </div>
+
+      <nav class="toc" aria-label="On this page">
+        <strong>On this page</strong>
+        <ol>
+          <li><a href="#what">What Pcapy does</a></li>
+          <li><a href="#stored">What is stored on your device</a></li>
+          <li><a href="#leaves">What leaves your device</a></li>
+          <li><a href="#permissions">Permissions</a></li>
+          <li><a href="#sensitive">Captures can contain sensitive information</a></li>
+          <li><a href="#retention">Keeping and deleting your data</a></li>
+          <li><a href="#website">This website</a></li>
+          <li><a href="#children">Children</a></li>
+          <li><a href="#changes">Changes to this policy</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ol>
+      </nav>
+
+      <h2 id="what">What Pcapy does</h2>
+      <p>Pcapy is a developer tool for inspecting network traffic. When you tap <strong>Start</strong>, it sets up a local VPN on your device. On Android it routes only the apps you select through it; on iPhone it routes all traffic from the device, because iOS does not allow choosing apps. Pcapy forwards that traffic to its normal destination, exactly as it would have gone without Pcapy, and records the packets it sees in a capture file on your device. This VPN is local to your device: it does not send your traffic through any server operated by the developer.</p>
+
+      <h2 id="stored">What is stored on your device</h2>
+      <ul>
+        <li><strong>Capture files</strong> (<code>.pcapng</code>): the packets recorded during a session, with timestamps and direction. On Android each packet also carries the name of the app that sent it.</li>
+        <li><strong>Your stream password</strong>, kept in the app's private storage on your device so you do not have to retype it.</li>
+        <li><strong>Settings</strong>: the apps you selected and your option choices.</li>
+      </ul>
+      <p>This data stays in the app's own storage. Android's cloud backup is turned off for Pcapy. On iPhone, app settings can be included in your device backups, as with most apps.</p>
+
+      <h2 id="leaves">What leaves your device</h2>
+      <p>Only the following, and only as described:</p>
+      <ul>
+        <li><strong>Your normal traffic.</strong> While capturing, your apps' traffic goes to the servers those apps were already talking to. Pcapy does not add any destination.</li>
+        <li><strong>The live stream to your computer.</strong> If you connect Wireshark, the recorded packets are sent to the computer you connect, normally over your local network, and to nobody else. Access needs the password you set, and repeated wrong guesses are slowed down. <strong>The stream itself is not encrypted</strong>, so anyone on the same network could read it in transit. Use a network you trust.</li>
+        <li><strong>Sharing a capture.</strong> When you tap Share on a saved capture, the system share sheet opens and the file goes wherever you choose.</li>
+        <li><strong>DNS lookups.</strong> On Android, Pcapy keeps using your network's own DNS servers. On iPhone, while a capture is running, Pcapy sets the device's DNS servers to <strong>Cloudflare (1.1.1.1)</strong> and <strong>Google (8.8.8.8)</strong>, so the hostnames your device looks up are sent to those providers, who handle them under their own privacy policies. Pcapy does not see or keep these outside your capture file.</li>
+      </ul>
+      <p>Pcapy sends nothing else: no usage statistics, no crash reports, no identifiers.</p>
+
+      <h2 id="permissions">Permissions</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Permission</th><th scope="col">Why Pcapy needs it</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">VPN (the system's "connection request")</th><td>To receive and forward the traffic you want to inspect. You must approve it, and you can stop it at any time.</td></tr>
+            <tr><th scope="row">See installed apps (Android)</th><td>To show the list of apps, with their icons, so you can choose which to capture. The list never leaves your device.</td></tr>
+            <tr><th scope="row">Notifications (Android)</th><td>To show that a capture is running and let you stop it from the notification.</td></tr>
+            <tr><th scope="row">Run in the foreground (Android)</th><td>So Android keeps the capture alive while you use other apps.</td></tr>
+            <tr><th scope="row">Network state (Android)</th><td>To detect your current network's DNS servers and whether it supports IPv6.</td></tr>
+            <tr><th scope="row">VPN configuration (iPhone)</th><td>iOS asks to add a VPN configuration the first time you start a capture. Pcapy needs it to capture.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Pcapy does not ask for access to your contacts, photos, camera, microphone or location.</p>
+
+      <h2 id="sensitive">Captures can contain sensitive information</h2>
+      <p>A capture file can include the websites and servers you contacted, IP addresses, and the contents of any traffic that is not encrypted. Treat capture files like any other sensitive file: share them carefully and delete them when you no longer need them. Use Pcapy only on devices and networks you own or are authorised to test.</p>
+
+      <h2 id="retention">Keeping and deleting your data</h2>
+      <p>Capture files stay on your device until you delete them. Open <strong>Saved captures</strong> in the app, where you can share or delete each file. Uninstalling Pcapy removes its files, settings and saved password from your device. Because the developer receives none of this data, there is nothing for the developer to delete on your behalf.</p>
+
+      <h2 id="website">This website</h2>
+      <p>This website uses no cookies, analytics, advertising or third-party scripts, fonts or images. It is hosted on GitHub Pages, and GitHub may process visitors' IP addresses and request logs to serve the pages, as described in <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub's privacy statement</a>.</p>
+
+      <h2 id="children">Children</h2>
+      <p>Pcapy is a developer tool and is not directed at children. It does not knowingly collect personal information from anyone, including children.</p>
+
+      <h2 id="changes">Changes to this policy</h2>
+      <p>If Pcapy's behaviour changes in a way that affects your privacy, this page will be updated and the date at the top will change. For example, if a future version added encryption of the stream or any online service, this policy would say so before that version is released.</p>
+
+      <h2 id="contact">Contact</h2>
+      <p>Questions about this policy: {{#if CONTACT_EMAIL}}<a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a>{{else}}please use the developer contact details shown on Pcapy's App Store or Google Play page{{/if}}.</p>
+    </div>
+  </div>
+</main>
+{{> footer}}
+</body>
+</html>
